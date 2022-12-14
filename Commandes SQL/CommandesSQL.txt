@@ -25,3 +25,30 @@ WHERE b.Type_local = 'Appartement'
 GROUP BY b.Total_piece
 
 4)
+
+SELECT d.Nom_dep as 'Nom', v.Valeurs / b.Surface_carrez as prixMetreCarrez 
+FROM departement d LEFT JOIN commune c ON c.Id_dep = d.Id_dep 
+JOIN bien b ON b.id_codedep_codecommune = c.ID_com 
+JOIN ventes v ON v.Id_ventes = b.Id_bien 
+GROUP BY d.Nom_dep 
+ORDER BY prixMetreCarrez DESC LIMIT 10
+
+5)
+
+SELECT r.Nom_reg as 'Nom', AVG(v.Valeurs / b.Surface_carrez) as AVGprixMetreCarrez 
+FROM departement d LEFT JOIN commune c ON c.Id_dep = d.Id_dep 
+JOIN bien b ON b.id_codedep_codecommune = c.ID_com 
+JOIN ventes v ON v.Id_ventes = b.Id_bien 
+JOIN region r ON r.Id_reg = d.Id_reg 
+WHERE r.Nom_reg = 'ÃŽle-de-France' 
+GROUP BY r.Nom_reg
+
+6)
+
+SELECT b.Id_bien as 'Id Appart ', d.Nom_dep, v.Valeurs as 'Valeur', b.Surface_carrez 
+FROM departement d LEFT JOIN commune c ON c.Id_dep = d.Id_dep 
+JOIN bien b ON b.id_codedep_codecommune = c.ID_com 
+JOIN ventes v ON v.Id_ventes = b.Id_bien 
+JOIN region r ON r.Id_reg = d.Id_reg 
+WHERE b.Type_local = "Appartement" 
+ORDER BY v.Valeurs DESC LIMIT 10
